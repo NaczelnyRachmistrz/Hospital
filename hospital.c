@@ -4,12 +4,15 @@
 void freeInput(InputData *a) {
 	if (a->name1 != NULL) {
 		free(a->name1);
+		a->name1 = NULL;
 	}
 	if (a->name2 != NULL) {
 		free(a->name2);
+		a->name2 = NULL;
 	}
 	if (a->diseaseDesc != NULL) {
 		free(a->diseaseDesc);
+		a->diseaseDesc = NULL;
 	}
 	free(a);
 	return;
@@ -18,7 +21,7 @@ void freeInput(InputData *a) {
 int main(int argc, char **argv) {
 	while(1) {
 		InputData *cos = readData();
-		printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
+		//printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
 		if (cos == NULL)
 			break;
 		switch((int) cos->inputType) {
@@ -38,7 +41,7 @@ int main(int argc, char **argv) {
 				deletePatientData(cos->name1);
 				break;
 		}
-		printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
+		//printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
 		freeInput(cos);
 	}
 	freeAll();
