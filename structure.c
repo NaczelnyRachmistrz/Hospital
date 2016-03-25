@@ -50,13 +50,25 @@ static void freeDiseaseList(DiseaseList *disList) {
 }
 
 static void freePatient(Patient *pat) {
-	freeDiseaseList(pat->diseases);
+	if (pat->diseases != NULL)
+		freeDiseaseList(pat->diseases);
 	pat->diseasesNr = 0;
 	pat->diseases = NULL;
 	return;
 }
 
+static void freePatientList(PatientList *patList) {
+	freePatient(&(patList->first));
+	free(patList->first.name);
+	if (patList->next != NULL) {
+		freePatientList(patList->next);
+	}
+	free(patList);
+	return;
+}
+
 void freeAll() {
+	freePatientList(patients);
 	return;
 }
 
@@ -72,8 +84,9 @@ void newDisease(char *name1, char *diseaseDesc) {
 	Disease *temp = (Disease*) malloc(sizeof(Disease));
 	DiseaseList *tempList = (DiseaseList*) malloc(sizeof(DiseaseList));
 	temp->counter = 1;
-	temp->description = (char*) malloc(sizeof(char) * strlen(diseaseDesc));
+	temp->description = (char*) malloc(sizeof(char) * (strlen(diseaseDesc) + 1));
 	strcpy(temp->description, diseaseDesc);
+	//printf("%s\n", temp->description);
 	tempList->lastDisease = temp;
 	while(*iter != NULL) {
 		if (strcmp((*iter)->first.name, name1) == 0) {
@@ -87,7 +100,7 @@ void newDisease(char *name1, char *diseaseDesc) {
 	}
 	*iter = (PatientList*) malloc(sizeof(PatientList));
 	Patient tempPat;
-	tempPat.name = (char*) malloc(sizeof(char) * strlen(name1));
+	tempPat.name = (char*) malloc(sizeof(char) * (strlen(name1) + 1));
 	strcpy(tempPat.name, name1);
 	tempPat.diseasesNr = 1;
 	tempList->prevDisease = NULL;
@@ -144,7 +157,7 @@ void copyDisease(char *name1, char *name2) {
 	if (pat1 == NULL) {
 		*iter = (PatientList *) malloc(sizeof(PatientList));
 		pat1 = &((*iter)->first);
-		pat1->name = (char *) malloc(sizeof(char) * strlen(name1));
+		pat1->name = (char *) malloc(sizeof(char) * (strlen(name1) + 1));
 		strcpy(pat1->name, name1);
 		pat1->diseases = NULL;
 		pat1->diseasesNr = 0;
@@ -176,7 +189,7 @@ void changeDesc(char *name1, int n, char *diseaseDesc) {
 			tempList = &(iter->first.diseases);
 			temp = (Disease *) malloc(sizeof(Disease));
 			temp->counter = 1;
-			temp->description = (char *) malloc(sizeof(char) * strlen(diseaseDesc));
+			temp->description = (char *) malloc(sizeof(char) * (strlen(diseaseDesc) + 1));
 			strcpy(temp->description, diseaseDesc);
 			while(n != 0) {
 				tempList = &((*tempList)->prevDisease);

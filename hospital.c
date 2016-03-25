@@ -18,10 +18,22 @@ void freeInput(InputData *a) {
 	return;
 }
 
+bool flag = 0;
+
 int main(int argc, char **argv) {
+	if (argc >= 3) {
+		printf("ERROR\n");
+		return 1;
+	} else if (argc == 2) {
+		if (strcmp("-v", argv[1]) != 0) {
+			printf("ERROR\n");
+			return 1;
+		}
+		flag = 1;
+	}
 	while(1) {
 		InputData *cos = readData();
-		//printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
+	//	printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
 		if (cos == NULL)
 			break;
 		switch((int) cos->inputType) {
@@ -43,6 +55,9 @@ int main(int argc, char **argv) {
 		}
 		//printf("%d %d %s %s %s\n", cos->inputType, cos->nr, cos->name1, cos->name2, cos->diseaseDesc);
 		freeInput(cos);
+		if (flag) {
+			fprintf(stderr, "DESCRIPTIONS: %d\n", diseasesNumber());
+		}
 	}
 	freeAll();
 	return 0;
