@@ -86,7 +86,6 @@ void newDisease(char *name1, char *diseaseDesc) {
 	temp->counter = 1;
 	temp->description = (char*) malloc(sizeof(char) * (strlen(diseaseDesc) + 1));
 	strcpy(temp->description, diseaseDesc);
-	//printf("%s\n", temp->description);
 	tempList->lastDisease = temp;
 	while(*iter != NULL) {
 		if (strcmp((*iter)->first.name, name1) == 0) {

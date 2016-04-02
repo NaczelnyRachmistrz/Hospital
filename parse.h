@@ -7,7 +7,7 @@
 
 #define MAX_LINE 100000
 
-enum Input {NEW_DISEASE, COPY_DISEASE, DESC_CHANGE, DESC_PRINT, DEL_PATIENT_DATA};
+enum Input {NEW_DISEASE, COPY_DISEASE, DESC_CHANGE, DESC_PRINT, DEL_PATIENT_DATA, END_OF_INPUT};
 
 typedef struct inputData {
 	enum Input inputType;
@@ -17,5 +17,5 @@ typedef struct inputData {
 	int nr;
 } InputData;
 
-extern InputData* readData(void);
+extern InputData readData(void);
 #endif /* PARSE_H */
