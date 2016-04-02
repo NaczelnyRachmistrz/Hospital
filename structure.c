@@ -81,7 +81,6 @@ int diseasesNumber() {
 /* REQUIRED FUNCTIONS */
 
 void newDisease(char *name1, char *diseaseDesc) {
-	
 	diseaseCounter++;
 	PatientList **iter = &patients;
 	Disease *temp = (Disease*) malloc(sizeof(Disease));
@@ -116,11 +115,9 @@ void newDisease(char *name1, char *diseaseDesc) {
 }
 
 void printDesc(char *name1, int n) {
-	
 	PatientList *iter = patients;
 	
 	while (iter != NULL) {
-		
 		if (strcmp(iter->first.name, name1) == 0) {
 			if (n > iter->first.diseasesNr) {
 				printf("IGNORED\n");
@@ -143,7 +140,6 @@ void printDesc(char *name1, int n) {
 }
 
 void copyDisease(char *name1, char *name2) {
-	
 	PatientList **iter = &patients;
 	Patient *pat1 = NULL, *pat2 = NULL;
 	Disease *temp = NULL;
@@ -188,15 +184,12 @@ void copyDisease(char *name1, char *name2) {
 }
 
 void changeDesc(char *name1, int n, char *diseaseDesc) {
-	
 	PatientList *iter = patients;
 	Disease *temp = NULL;
 	DiseaseList **tempList = NULL;
 	
 	while (iter != NULL) {
-		
 		if (strcmp(iter->first.name, name1) == 0) {
-			
 			if (n > iter->first.diseasesNr) {
 				printf("IGNORED\n");
 				return;
@@ -231,11 +224,9 @@ void changeDesc(char *name1, int n, char *diseaseDesc) {
 }
 
 void deletePatientData(char *name1) {
-	
 	PatientList *iter = patients;
 	
 	while (iter != NULL) {
-		
 		if (strcmp(iter->first.name, name1) == 0) {
 			freePatient(&(iter->first));
 			printf("OK\n");

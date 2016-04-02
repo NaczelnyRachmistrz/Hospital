@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
 	}
 	
 	while (1) {
-		
 		InputData cos = readData();
 		if (cos.inputType == END_OF_INPUT) {
 			break;
