@@ -24,6 +24,7 @@ typedef struct patientList {
 } PatientList;
 
 /* REQUIRED DATA */
+
 int diseaseCounter = 0;
 
 PatientList *patients;
@@ -50,8 +51,9 @@ static void freeDiseaseList(DiseaseList *disList) {
 }
 
 static void freePatient(Patient *pat) {
-	if (pat->diseases != NULL)
+	if (pat->diseases != NULL) {
 		freeDiseaseList(pat->diseases);
+	}
 	pat->diseasesNr = 0;
 	pat->diseases = NULL;
 	return;
@@ -79,6 +81,7 @@ int diseasesNumber() {
 /* REQUIRED FUNCTIONS */
 
 void newDisease(char *name1, char *diseaseDesc) {
+	
 	diseaseCounter++;
 	PatientList **iter = &patients;
 	Disease *temp = (Disease*) malloc(sizeof(Disease));
@@ -87,7 +90,8 @@ void newDisease(char *name1, char *diseaseDesc) {
 	temp->description = (char*) malloc(sizeof(char) * (strlen(diseaseDesc) + 1));
 	strcpy(temp->description, diseaseDesc);
 	tempList->lastDisease = temp;
-	while(*iter != NULL) {
+	
+	while (*iter != NULL) {
 		if (strcmp((*iter)->first.name, name1) == 0) {
 			tempList->prevDisease = (*iter)->first.diseases;
 			(*iter)->first.diseases = tempList;
@@ -97,6 +101,7 @@ void newDisease(char *name1, char *diseaseDesc) {
 		}
 		iter = &((*iter)->next);
 	}
+	
 	*iter = (PatientList*) malloc(sizeof(PatientList));
 	Patient tempPat;
 	tempPat.name = (char*) malloc(sizeof(char) * (strlen(name1) + 1));
@@ -111,8 +116,11 @@ void newDisease(char *name1, char *diseaseDesc) {
 }
 
 void printDesc(char *name1, int n) {
+	
 	PatientList *iter = patients;
-	while(iter != NULL) {
+	
+	while (iter != NULL) {
+		
 		if (strcmp(iter->first.name, name1) == 0) {
 			if (n > iter->first.diseasesNr) {
 				printf("IGNORED\n");
@@ -120,13 +128,14 @@ void printDesc(char *name1, int n) {
 			}
 			n = iter->first.diseasesNr - n;
 			DiseaseList *tempList = iter->first.diseases;
-			while(n != 0) {
+			while (n != 0) {
 				tempList = tempList->prevDisease;
 				n--;
 			}
 			printf("%s\n", tempList->lastDisease->description);
 			return;
 		}
+		
 		iter = iter->next;		
 	}
 	printf("IGNORED\n");
@@ -134,11 +143,13 @@ void printDesc(char *name1, int n) {
 }
 
 void copyDisease(char *name1, char *name2) {
+	
 	PatientList **iter = &patients;
 	Patient *pat1 = NULL, *pat2 = NULL;
 	Disease *temp = NULL;
 	DiseaseList *tempList = NULL;
-	while((*iter) != NULL) {
+	
+	while ((*iter) != NULL) {
 		if (strcmp((*iter)->first.name, name1) == 0) {
 			pat1 = &((*iter)->first);
 		} else if (strcmp((*iter)->first.name, name2) == 0) {
@@ -146,6 +157,7 @@ void copyDisease(char *name1, char *name2) {
 		}
 		iter = &((*iter)->next);
 	}
+	
 	if (pat2 == NULL) {
 		printf("IGNORED\n");
 		return;
@@ -153,6 +165,7 @@ void copyDisease(char *name1, char *name2) {
 		printf("IGNORED\n");
 		return;
 	}
+	
 	if (pat1 == NULL) {
 		*iter = (PatientList *) malloc(sizeof(PatientList));
 		pat1 = &((*iter)->first);
@@ -162,6 +175,7 @@ void copyDisease(char *name1, char *name2) {
 		pat1->diseasesNr = 0;
 		(*iter)->next = NULL;
 	}
+	
     tempList = (DiseaseList *) malloc(sizeof(DiseaseList));
 	pat1->diseasesNr++;
 	temp = pat2->diseases->lastDisease;
@@ -174,15 +188,20 @@ void copyDisease(char *name1, char *name2) {
 }
 
 void changeDesc(char *name1, int n, char *diseaseDesc) {
+	
 	PatientList *iter = patients;
 	Disease *temp = NULL;
 	DiseaseList **tempList = NULL;
-	while(iter != NULL) {
+	
+	while (iter != NULL) {
+		
 		if (strcmp(iter->first.name, name1) == 0) {
+			
 			if (n > iter->first.diseasesNr) {
 				printf("IGNORED\n");
 				return;
 			}
+			
 			diseaseCounter++;
 			n = iter->first.diseasesNr - n;
 			tempList = &(iter->first.diseases);
@@ -190,7 +209,8 @@ void changeDesc(char *name1, int n, char *diseaseDesc) {
 			temp->counter = 1;
 			temp->description = (char *) malloc(sizeof(char) * (strlen(diseaseDesc) + 1));
 			strcpy(temp->description, diseaseDesc);
-			while(n != 0) {
+			
+			while (n != 0) {
 				tempList = &((*tempList)->prevDisease);
 				n--;
 			}
@@ -202,23 +222,29 @@ void changeDesc(char *name1, int n, char *diseaseDesc) {
 			printf("OK\n");
 			return;
 		}
+		
 		iter = iter->next;
 	}
+	
 	printf("IGNORED\n");
 	return;
 }
 
 void deletePatientData(char *name1) {
+	
 	PatientList *iter = patients;
 	
-	while(iter != NULL) {
+	while (iter != NULL) {
+		
 		if (strcmp(iter->first.name, name1) == 0) {
 			freePatient(&(iter->first));
 			printf("OK\n");
 			return;
 		}
+		
 		iter = iter->next;
 	}
+	
 	printf("IGNORED\n");
 	return;
 }

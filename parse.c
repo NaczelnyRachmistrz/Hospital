@@ -11,14 +11,17 @@ InputData readData() {
 	int n;
 	InputData ret = {0,NULL,NULL,NULL,0};
 	operationType = (char*) malloc(sizeof(char) * 40);
+	
 	if (scanf("%s", operationType) == EOF) {
 		free(operationType);
 		ret.inputType = END_OF_INPUT;
 		return ret;
 	}
+	
 	name1 = (char*) malloc(sizeof(char) * MAX_LINE);
 	scanf("%s", name1);
 	ret.name1 = name1;
+	
 	if (strcmp(operationType, "NEW_DISEASE_ENTER_DESCRIPTION") == 0) {
 		ret.inputType = NEW_DISEASE;
 		disease = (char*) malloc(sizeof(char) * MAX_LINE);
@@ -45,6 +48,7 @@ InputData readData() {
 	} else if (strcmp(operationType, "DELETE_PATIENT_DATA") == 0) {
 		ret.inputType = DEL_PATIENT_DATA;
 	}
+	
 	free(operationType);
 	return ret;
 }

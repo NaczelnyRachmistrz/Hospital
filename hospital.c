@@ -4,6 +4,7 @@
 bool flag = 0;
 
 int main(int argc, char **argv) {
+	
 	if (argc >= 3) {
 		printf("ERROR\n");
 		return 1;
@@ -15,7 +16,8 @@ int main(int argc, char **argv) {
 		flag = 1;
 	}
 	
-	while(1) {
+	while (1) {
+		
 		InputData cos = readData();
 		if (cos.inputType == END_OF_INPUT) {
 			break;
@@ -42,10 +44,13 @@ int main(int argc, char **argv) {
 				break;
 		}
 		free(cos.name1);
+		
 		if (flag) {
 			fprintf(stderr, "DESCRIPTIONS: %d\n", diseasesNumber());
 		}
+		
 	}
+	
 	freeAll();
 	return 0;
 }
