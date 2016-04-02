@@ -1,3 +1,7 @@
+/* 
+	Zadanie Szpital - Michał Kukuła
+						*/
+
 #include "structure.h"
 #include "parse.h"
 
